@@ -1,0 +1,11 @@
+E:\C#\WindowMover\WindowMover\bin\Debug\WindowMover.exe.config
+E:\C#\WindowMover\WindowMover\bin\Debug\WindowMover.exe
+E:\C#\WindowMover\WindowMover\bin\Debug\WindowMover.pdb
+E:\C#\WindowMover\WindowMover\bin\Debug\PHLMACR.dll
+E:\C#\WindowMover\WindowMover\bin\Debug\PHLMACR.pdb
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.csprojResolveAssemblyReference.cache
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.Properties.Resources.resources
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.csproj.GenerateResource.Cache
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.exe
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.pdb
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.Form1.resources
