@@ -9,3 +9,5 @@ E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.csproj.GenerateResource.Cach
 E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.exe
 E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.pdb
 E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.Form1.resources
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.KeySet.resources
+E:\C#\WindowMover\WindowMover\obj\Debug\WindowMover.Settings.resources

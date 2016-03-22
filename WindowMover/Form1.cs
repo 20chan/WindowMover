@@ -18,6 +18,9 @@ namespace WindowMover
     }
     public partial class Form1 : Form
     {
+         Keys left, right, up, down;
+        int gap;
+        public static INISAVE i = new INISAVE(Environment.CurrentDirectory + "\\settings.ini");
         public struct Rect
         {
             public int Left { get; set; }
@@ -38,6 +41,13 @@ namespace WindowMover
             hWnd = IntPtr.Zero;
             KeyboardHook.KeyEvented += KeyboardHook_KeyEvented;
             KeyboardHook.HookStart();
+
+            gap = Convert.ToInt32(Form1.i.GetSetting("set", "gap"));
+
+            left = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "left")));
+            right = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "right")));
+            up = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "up")));
+            down = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "down")));
         }
         ~Form1()
         {
@@ -67,47 +77,68 @@ namespace WindowMover
             switch (ar)
             {
                 case ARROW.LEFT:
-                    SetWindowPos(hWnd, 0, r.Left - 10, r.Top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                    SetWindowPos(hWnd, 0, r.Left - gap, r.Top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
                     break;
                 case ARROW.RIGHT:
-                    SetWindowPos(hWnd, 0, r.Left +10, r.Top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                    SetWindowPos(hWnd, 0, r.Left +gap, r.Top, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
                     break;
                 case ARROW.UP:
-                    SetWindowPos(hWnd, 0, r.Left, r.Top + 10, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                    SetWindowPos(hWnd, 0, r.Left, r.Top - gap, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
                     break;
                 case ARROW.DOWN:
-                    SetWindowPos(hWnd, 0, r.Left, r.Top - 10, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
+                    SetWindowPos(hWnd, 0, r.Left, r.Top + gap, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_SHOWWINDOW);
                     break;
             }
         }
 
         private void KeyboardHook_KeyEvented(Keys key, KeyEventType type)
         {
-            if(type == KeyEventType.DOWN && ((Control.ModifierKeys & Keys.Control) == Keys.Control))
+            if (key == Keys.LControlKey) return;
+            Keys k = key;
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                k |= Keys.Control;
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+                k |= Keys.Shift;
+            if ((Control.ModifierKeys & Keys.Alt) == Keys.Alt)
+                k |= Keys.Alt;
+            if (type == KeyEventType.DOWN)
             {
-                switch(key)
-                {
-                    case Keys.H:
-                        MoveWindow(ARROW.LEFT);
-                        break;
-                    case Keys.J:
-                        MoveWindow(ARROW.DOWN);
-                        break;
-                    case Keys.K:
-                        MoveWindow(ARROW.UP);
-                        break;
-                    case Keys.L:
-                        MoveWindow(ARROW.RIGHT);
-                        break;
-                    default:
-                        break;
-                }
+                if (k == left)
+                    MoveWindow(ARROW.LEFT);
+                if (k == right)
+                    MoveWindow(ARROW.RIGHT);
+                if (k == up)
+                    MoveWindow(ARROW.UP);
+                if (k == down)
+                    MoveWindow(ARROW.DOWN);
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
+        }
+
+        private void 종ㄹToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void 설정ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings s = new Settings();
+            s.Finished += S_Finished;
+            s.Show();
+        }
+
+        private void S_Finished()
+        {
+            gap = Convert.ToInt32(Form1.i.GetSetting("set", "gap"));
+
+            left = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "left")));
+            right = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "right")));
+            up = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "up")));
+            down = (Keys)Enum.Parse(typeof(Keys), (Form1.i.GetSetting("key", "down")));
         }
     }
 }
